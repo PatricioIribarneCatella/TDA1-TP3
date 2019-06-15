@@ -6,7 +6,7 @@
 # return:
 #   - lista de ciudades ordenadas por prioridad
 #
-def seleccion(jugador, ciudades, rutas):
+def select(jugador, ciudades, rutas):
 
     selec = []
     metropoli = ciudades[jugador - 1][0]
