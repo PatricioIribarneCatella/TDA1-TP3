@@ -13,7 +13,6 @@ from commands.general_command import create_imperium_dict
 
 WINNER_FILE = "ganador.txt"
 
-
 def create_winner_file(self, winner):
         with open(WINNER_FILE, "w") as winner_file:
                 winner_file.write("%s\n" % winner)
