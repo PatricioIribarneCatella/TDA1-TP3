@@ -9,7 +9,7 @@
 #       imperio_i: lista - elemento = (ciudad, cant_ejercito)
 #           cant_ejercito es igual a 1 inicialmente
 #
-def division(ciudades, rutas, s1, s2):
+def divide(ciudades, rutas, s1, s2):
 
     metro1 = ciudades[0][0]
     metro2 = ciudades[1][0]
@@ -55,7 +55,7 @@ def test(msg, ciudades, s1, s2):
 
     print(msg)
 
-    i1, i2 = division(ciudades, {}, s1, s2)
+    i1, i2 = divide(ciudades, {}, s1, s2)
     
     print(i1)
     print(i2)

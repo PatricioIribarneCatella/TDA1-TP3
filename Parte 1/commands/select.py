@@ -44,6 +44,6 @@ if __name__ == "__main__":
             ("Moscu", "Roma"): 6,
             ("Moscu", "Washigton"): 3}
 
-    print(seleccion(1, ciudades, rutas))
-    print(seleccion(2, ciudades, rutas))
+    print(select(1, ciudades, rutas))
+    print(select(2, ciudades, rutas))
     
