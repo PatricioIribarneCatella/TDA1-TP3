@@ -45,7 +45,7 @@ def main(player, cities_path, routes_path, imp_path):
 
     try:
         with open(HARVEST_FILE.format(player)) as f:
-            pharvest = f.readline()
+            pharvest = int(f.readline())
     except FileNotFoundError:
         pharvest = 0
 
