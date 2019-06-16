@@ -29,7 +29,8 @@ def collect(player, cities, routes, imp, pharvest):
 
     # Add edges between cities and "metropoli"
     for w in range(1, len(imp.keys()) + 1):
-        g.add_edge(w, metropoli_num, routes[(mapping[w], metropoli)])
+        if (mapping[w], metropoli) in routes:
+            g.add_edge(w, metropoli_num, routes[(mapping[w], metropoli)])
 
     # Add edges between cities
     for n, city1 in enumerate(imp.keys()):
