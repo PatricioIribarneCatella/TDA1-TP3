@@ -6,7 +6,7 @@ from os import path
 
 sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 
-from commands.collect import collect
+from commands.produce import produce
 
 HARVEST_FILE = "cosecha{}_temp.txt"
 IMPERIUM_FILE = "imperio{}_temp.txt"
@@ -104,3 +104,4 @@ if __name__ == "__main__":
              params["harvest-1"],
              params["imp-2"],
              params["harvest-2"])
+
