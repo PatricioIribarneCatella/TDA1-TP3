@@ -58,10 +58,10 @@ def main(player, cities_path, routes_path,
             imp2[city] = int(army)
 
     with open(harvest1_path) as f:
-        h1 = f.readline()
+        h1 = int(f.readline())
 
     with open(harvest2_path) as f:
-        h2 = f.readline()
+        h2 = int(f.readline())
 
     harvest_temp, imp_temp = produce(player, cities, routes, imp1, h1, imp2, h2)
 
