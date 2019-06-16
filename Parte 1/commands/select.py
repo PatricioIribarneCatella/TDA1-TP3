@@ -23,7 +23,7 @@ def select(jugador, ciudades, rutas):
                                 reverse=True)
 
     for ciudad, cant in posibles_ciudades:
-        if (metropoli, ciudad) in rutas:
+        if (ciudad, metropoli) in rutas:
             selec.append(ciudad)
 
     return selec
