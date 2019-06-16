@@ -45,3 +45,8 @@ def create_imperium_dict(self, imperium_file_name, player):
         imperium[name] = city
         counter += 1
     return imperium
+
+def get_harvest(self, harvest_file_name):
+    with open(harvest_file_name) as harvest_file:
+    collect_csv = csv.reader(harvest_file)
+    return harvest_csv.readline()
