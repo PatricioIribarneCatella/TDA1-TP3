@@ -1,4 +1,4 @@
-def create_metropolis_dict(self, cities_file_name):
+def create_metropolis_dict(cities_file_name):
     with open(cities_file_name) as cities_file:
     cities_csv = csv.reader(cities_file)
     metropolis = {}
@@ -8,7 +8,7 @@ def create_metropolis_dict(self, cities_file_name):
     metropolis[name] = Metropolis(name, 2)
     return metropolis
 
-def create_cities_dict(self, cities_file_name):
+def create_cities_dict(cities_file_name):
     with open(cities_file_name) as cities_file:
     cities_csv = csv.reader(cities_file)
     cities = {}
@@ -23,15 +23,17 @@ def create_cities_dict(self, cities_file_name):
         counter += 1
     return cities
 
-def create_routes_dict(self, routes_file_name):
+def create_routes_dict(routes_file_name):
     with open(routes_file_name) as routes_file:
     routes_csv = csv.reader(routes_file)
     routes = {}
     for origin, destination, production in routes_csv:
+        if not routes.has_key(origin):
+            routes[origin] = {}
         routes[origin][destination] = production
     return metropolis, cities
 
-def create_imperium_dict(self, imperium_file_name, player):
+def create_imperium_dict(imperium_file_name, player):
     with open(imperium_file_name) as imperium_file:
     imperium_csv = csv.reader(imperium_file)
     imperium = {}
@@ -46,7 +48,17 @@ def create_imperium_dict(self, imperium_file_name, player):
         counter += 1
     return imperium
 
-def get_harvest(self, harvest_file_name):
+def create_attack_dict(attack1_path, player):
+    with open(attack1_path) as attack_file:
+    attack_csv = csv.reader(attack_file)
+    attack = {}
+    for origin, destination, armies in attack_csv:
+        if not attack.has_key(origin):
+            attack[origin] = {}
+        attack[origin][destination] = armies
+    return attack
+
+def get_harvest(harvest_file_name):
     with open(harvest_file_name) as harvest_file:
     collect_csv = csv.reader(harvest_file)
     return harvest_csv.readline()

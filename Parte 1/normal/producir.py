@@ -69,7 +69,7 @@ def main(player, cities_path, routes_path,
 
 def parse_input(params):
 
-    if len(params) != 7:
+    if len(params) != 8:
         print("Error: cantidad insuficiente de parámetros")
         print("Formato: producir.py [jugador] [ciudades.txt] [rutas.txt] [imperio1.txt] [cosecha1.txt] [imperio2.txt] [cosecha2.txt]")
         return None
@@ -104,4 +104,3 @@ if __name__ == "__main__":
              params["harvest-1"],
              params["imp-2"],
              params["harvest-2"])
-
