@@ -18,7 +18,7 @@ def create_cities_dict(cities_file_name):
             city = Metropolis(name, counter)
         else:
             city = City(name)
-        city.set_production(production)
+        city.set_production(int(production))
         cities[name] = city
         counter += 1
     return cities
@@ -30,7 +30,7 @@ def create_routes_dict(routes_file_name):
     for origin, destination, production in routes_csv:
         if not routes.has_key(origin):
             routes[origin] = {}
-        routes[origin][destination] = production
+        routes[origin][destination] = int(production)
     return metropolis, cities
 
 def create_imperium_dict(imperium_file_name, player):
@@ -43,7 +43,7 @@ def create_imperium_dict(imperium_file_name, player):
             city = Metropolis(name, player)
         else:
             city = City(name)
-        city.set_armies(armies)
+        city.set_armies(int(armies))
         imperium[name] = city
         counter += 1
     return imperium
@@ -55,10 +55,10 @@ def create_attack_dict(attack1_path, player):
     for origin, destination, armies in attack_csv:
         if not attack.has_key(origin):
             attack[origin] = {}
-        attack[origin][destination] = armies
+        attack[origin][destination] = int(armies)
     return attack
 
 def get_harvest(harvest_file_name):
     with open(harvest_file_name) as harvest_file:
     collect_csv = csv.reader(harvest_file)
-    return harvest_csv.readline()
+    return int(harvest_csv.readline()[0])

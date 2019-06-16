@@ -24,12 +24,12 @@ def main(cities_path, routes_path,
          imp1_path, imp2_path,
          attack1_path, attack2_path):
 
-     create_cities_dict(cities_path)
-     create_routes_dict(routes_path)
-     create_imperium_dict(imp1_path, 1)
-     create_imperium_dict(imp2_path, 2)
-     create_attack_dict(attack1_path,1)
-     create_attack_dict(attack2_path,2)
+    cities = create_cities_dict(cities_path)
+     routes = create_routes_dict(routes_path)
+     imp1 = create_imperium_dict(imp1_path, 1)
+     imp2 = create_imperium_dict(imp2_path, 2)
+     attack1 = create_attack_dict(attack1_path,1)
+     attack2 = create_attack_dict(attack2_path,2)
 
 
     imp_1, imp_2 = contest(cities, routes, imp1, imp2, attack1, attack2)

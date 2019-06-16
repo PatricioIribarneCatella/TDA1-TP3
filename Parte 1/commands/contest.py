@@ -10,7 +10,7 @@ def remove_attacking_armies(imperium, attack):
     defense_imperium = {}
     for city in imperium.keys():
         if attack.has_key(city):
-            defense_imperium[city] = imperium[city] - sum(attack[city].values())
+            defense_imperium[city] = imperium[city].armies() - sum(attack[city].values())
     return defense_imperium
 
 def contest(cities, routes, imp1, imp2, attack1, attack2):
