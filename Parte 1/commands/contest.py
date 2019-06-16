@@ -13,7 +13,7 @@ def remove_attacking_armies(imperium, attack):
             defense_imperium[city] = imperium[city].armies() - sum(attack[city].values())
     return defense_imperium
 
-def contest(cities, routes, imp1, imp2, attack1, attack2):
+def contest(cities, imp1, imp2, attack1, attack2):
 
     defense_imperium1 = remove_attacking_armies(imp1, attack1)
     defense_imperium2 = remove_attacking_armies(imp2, attack2)

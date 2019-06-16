@@ -30,7 +30,7 @@ def create_routes_dict(routes_file_name):
     for origin, destination, production in routes_csv:
         if not routes.has_key(origin):
             routes[origin] = {}
-        routes[origin][destination] = int(production)
+        routes[origin][destination] = int(capacity)
     return metropolis, cities
 
 def create_imperium_dict(imperium_file_name, player):
@@ -62,3 +62,10 @@ def get_harvest(harvest_file_name):
     with open(harvest_file_name) as harvest_file:
     collect_csv = csv.reader(harvest_file)
     return int(harvest_csv.readline()[0])
+
+def get_metropolis(metropoles, player):
+    player_metropolis = None
+    for name, metropolis in metropoles.items():
+        if metropolis.superpower() == player:
+            player_metropolis = name
+    return player_metropolis
