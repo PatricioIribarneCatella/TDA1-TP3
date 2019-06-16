@@ -1,4 +1,4 @@
-def fifty_rounds_winner(self, round, harvest1, harvest2, imperium1, imperium2, routes):
+def fifty_rounds_winner(round, harvest1, harvest2, imperium1, imperium2, routes):
     winner = None
     if round < 50:
         return winner
@@ -20,7 +20,7 @@ def fifty_rounds_winner(self, round, harvest1, harvest2, imperium1, imperium2, r
     return winner
 
 
-def metropolis_is_disconnected(self, cities, routes, imperium, player):
+def metropolis_is_disconnected(metropoles, routes, imperium, player):
     player_metropolis = None
     for name, metropolis in metropoles.items():
         if metropolis.superpower() == player:
@@ -31,15 +31,15 @@ def metropolis_is_disconnected(self, cities, routes, imperium, player):
                 return False
     return True
 
-def disconection_winner(self, cities, routes, imperium1, imperium2):
+def disconection_winner(metropoles, routes, imperium1, imperium2):
     winner = None
-    if metropolis_is_disconnected(self, cities, routes, imperium1, 1):
+    if metropolis_is_disconnected(metropoles, routes, imperium1, 1):
         winner = 2
-    elif metropolis_is_disconnected(self, cities, routes, imperium2, 2):
+    elif metropolis_is_disconnected(metropoles, routes, imperium2, 2):
         winner = 1
     return winner
 
-def harvest_winner(self, harvest1, harvest2):
+def harvest_winner(harvest1, harvest2):
     winner = None
     if harvest1 >= 100 or harvest2>= 100:
         if harvest1>harvest2:

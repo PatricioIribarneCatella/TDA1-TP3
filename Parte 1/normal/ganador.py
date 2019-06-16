@@ -23,7 +23,6 @@ def main(self, round, cities, routes, imperium1, harvest1, imperium2, harvest2):
 
     metropoles = create_metropolis_dict(cities)
 
-    cities = create_cities_dict(cities)
     routes = create_routes_dict(routes)
 
     imperium1 = create_imperium_dict(imperium1, 1)
@@ -36,7 +35,7 @@ def main(self, round, cities, routes, imperium1, harvest1, imperium2, harvest2):
     if harvest_winner:
         winner = harvest_winner
     else:
-        disconection_winner = disconection_winner(cities, routes, imperium1, imperium2)
+        disconection_winner = disconection_winner(metropoles, routes, imperium1, imperium2)
         if disconection_winner:
             winner = disconection_winner
         else:
