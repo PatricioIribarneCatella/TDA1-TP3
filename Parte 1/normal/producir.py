@@ -36,32 +36,12 @@ def main(player, cities_path, routes_path,
                 cities.append((name, production))
             counter += 1
 
-    routes = {}
-
-    with open(routes_path) as f:
-        routes_csv = csv.reader(f)
-        for origin, destination, capacity in routes_csv:
-            routes[(origin, destination)] = capacity
-
-    imp1 = {}
-
-    with open(imp1_path) as f:
-        imp_csv = csv.reader(f)
-        for city, army in imp_csv:
-            imp1[city] = int(army)
-
-    imp2 = {}
-
-    with open(imp2_path) as f:
-        imp_csv = csv.reader(f)
-        for city, army in imp_csv:
-            imp2[city] = int(army)
-
-    with open(harvest1_path) as f:
-        h1 = int(f.readline())
-
-    with open(harvest2_path) as f:
-        h2 = int(f.readline())
+    cities_dict = create_cities_dict(cities_path)
+    routes = create_routes_dict(routes_path)
+    imp1 = create_imperium_dict(imp1_path, 1)
+    imp2 = create_imperium_dict(imp1_path, 2)
+    h1 = get_harvest(harvest1_path)
+    h2 = get_harvest(harvest2_path)
 
     harvest_temp, imp_temp = produce(player, cities, routes, imp1, h1, imp2, h2)
 
@@ -104,4 +84,3 @@ if __name__ == "__main__":
              params["harvest-1"],
              params["imp-2"],
              params["harvest-2"])
-

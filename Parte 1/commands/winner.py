@@ -21,13 +21,9 @@ def fifty_rounds_winner(round, harvest1, harvest2, imperium1, imperium2, routes)
 
 
 def metropolis_is_disconnected(metropoles, routes, imperium, player):
-    player_metropolis = None
-    for name, metropolis in metropoles.items():
-        if metropolis.superpower() == player:
-            player_metropolis = name
-
+    metropolis = get_metropolis(metropoles, player)
     for origin, destinations in routes.items():
-        if imperium.has_key(origin) and destinations.has_key(player_metropolis):
+        if imperium.has_key(origin) and destinations.has_key(metropolis):
                 return False
     return True
 

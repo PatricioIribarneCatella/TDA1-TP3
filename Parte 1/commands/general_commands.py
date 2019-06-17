@@ -69,3 +69,6 @@ def get_metropolis(metropoles, player):
         if metropolis.superpower() == player:
             player_metropolis = name
     return player_metropolis
+
+def are_neighbours(city, other_city, routes):
+    return routes[city].has_key(other_city) or routes[other_city].has_key(city)

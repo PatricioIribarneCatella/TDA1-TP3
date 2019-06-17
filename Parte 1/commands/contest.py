@@ -23,24 +23,24 @@ def contest(cities, imp1, imp2, attack1, attack2):
 
     imp_1 = {}
     imp_2 = {}
-    for city_name, city in cities:
-        if city_name in defense_imperium1 and not city_name in joint_armies2:
-            imp_1[city_name] = defense_imperium1[city_name]
-        elif city_name in defense_imperium2 and not city_name in joint_armies1:
-            imp_2[city_name] = defense_imperium2[city_name]
-        elif city_name in joint_armies1 and city_name in joint_armies2:
-            if joint_armies1[city_name]>joint_armies2[city_name]:
-                imp_1[city_name] = joint_armies1[city_name]-joint_armies2[city_name]
+    for city in cities.keys():
+        if city in defense_imperium1 and not city in joint_armies2:
+            imp_1[city] = defense_imperium1[city]
+        elif city in defense_imperium2 and not city in joint_armies1:
+            imp_2[city] = defense_imperium2[city]
+        elif city in joint_armies1 and city in joint_armies2:
+            if joint_armies1[city]>joint_armies2[city]:
+                imp_1[city] = joint_armies1[city]-joint_armies2[city]
             else:
-                imp_2[city_name] = joint_armies2[city_name]-joint_armies1[city_name]
-        elif city_name in defense_imperium1 and city_name in joint_armies2:
-            if defense_imperium1[city_name] > joint_armies2[city_name]:
-                imp_1[city_name] = defense_imperium1[city_name] - joint_armies2[city_name]
-            elif defense_imperium1[city_name] < joint_armies2[city_name]:
-                imp_2[city_name] = joint_armies2[city_name]- defense_imperium1[city_name]
-        elif city_name in defense_imperium2 and city_name in joint_armies1:
-            if defense_imperium2[city_name] > joint_armies1[city_name]:
-                imp_2[city_name] = defense_imperium2[city_name] - joint_armies1[city_name]
-            elif defense_imperium2[city_name] < joint_armies1[city_name]:
-                imp_1[city_name] = joint_armies1[city_name]- defense_imperium2[city_name]
+                imp_2[city] = joint_armies2[city]-joint_armies1[city]
+        elif city in defense_imperium1 and city in joint_armies2:
+            if defense_imperium1[city] > joint_armies2[city]:
+                imp_1[city] = defense_imperium1[city] - joint_armies2[city]
+            elif defense_imperium1[city] < joint_armies2[city]:
+                imp_2[city] = joint_armies2[city]- defense_imperium1[city]
+        elif city in defense_imperium2 and city in joint_armies1:
+            if defense_imperium2[city] > joint_armies1[city]:
+                imp_2[city] = defense_imperium2[city] - joint_armies1[city]
+            elif defense_imperium2[city] < joint_armies1[city]:
+                imp_1[city] = joint_armies1[city]- defense_imperium2[city]
     return imp_1, imp_2
