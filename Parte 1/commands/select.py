@@ -1,11 +1,11 @@
-from commands.graph import Graph
+from graph import Graph
 #
 # - player: inv value - {1,2}
 # - cities: list - element = (city, species)
 # - routes: dictionary of dictionaries - (K, V) = ((c1, c2), capacidad)
 #
 # return:
-#   - lista de ciudades ordenadas por prioridad
+#   - list of cities ordered by priority
 #
 def select(player, cities, routes):
 
@@ -43,7 +43,7 @@ def determine_levels(metropolis, cities, routes):
             for destination in destinations.keys():
                     g.add_edge(origin, destination, routes[origin][destination])
 
-    # Get max flow
+    # Get levels
     levels = g.levels(metropolis)
     return levels
 
@@ -57,7 +57,24 @@ if __name__ == "__main__":
             ("Madrid", 4),
             ("Montevideo", 5)]
 
-    routes = {"Buenos Aires": {"Montevideo": 3, "Madrid": 4, "Rio de Janeiro": 7},"Moscu":{"Roma": 6,"Washigton": 3}, "Madrid":{"Moscu": 3}, "Roma":{"Buenos Aires": 3}}
+    routes = {
+            "Buenos Aires": {
+                "Montevideo": 3,
+                "Madrid": 4,
+                "Rio de Janeiro": 7
+            },
+            "Moscu": {
+                "Roma": 6,
+                "Washigton": 3
+            },
+            "Madrid": {
+                "Moscu": 3
+            },
+            "Roma": {
+                "Buenos Aires": 3
+            }
+    }
 
     print(select(1, cities, routes))
     print(select(2, cities, routes))
+
