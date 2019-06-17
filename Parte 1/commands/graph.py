@@ -11,10 +11,10 @@ class Graph():
         self.adjacency_list[key] = {}
         self.nodes_data[key] = data if data else None
 
-    def add_edge(self, key1, key2, weight = 1): 
+    def add_edge(self, key1, key2, weight = 1):
         self.adjacency_list[key1][key2] = weight
         if not self.direct_graph:
-            self.adjacency_list[key2][key1] = weight 
+            self.adjacency_list[key2][key1] = weight
 
     def edge_weight(self, key1, key2):
         return self.adjacency_list[key1][key2]
@@ -36,11 +36,11 @@ class Graph():
 
     def bfs(self, s, t, parents):
         visited = {s}
-        queue = deque([s]) 
+        queue = deque([s])
 
         while queue:
             current = queue.popleft()
-            
+
             for adjacent, weight in self.adjacency_list[current].items():
                 if not adjacent in visited and weight > 0:
                     queue.append(adjacent)
@@ -49,33 +49,49 @@ class Graph():
 
         return t in visited
 
-    def ford_fulkerson(self, s, t): 
-        
+    def levels(self, s):
+        visited = {s}
+        levels = {s:0}
+        queue = deque([s])
+
+        while queue:
+            current = queue.popleft()
+
+            for adjacent, weight in self.adjacency_list[current].items():
+                if not adjacent in visited:
+                    queue.append(adjacent)
+                    visited.add(adjacent)
+                    levels[adjacent] = levels[current]+1
+        return levels, levels[current]
+
+
+    def ford_fulkerson(self, s, t):
+
         parent = { node: None for node in graph.adjacency_list }
         residual = Graph(direct_graph = True)
         for node, adjacents in self.adjacency_list.items():
             residual.add_node(node) if not node in residual else None
-            for adjacent, weight in adjacents.items(): 
+            for adjacent, weight in adjacents.items():
                 residual.add_node(adjacent) if not adjacent in residual else None
-                residual.add_edge(node, adjacent, weight) 
+                residual.add_edge(node, adjacent, weight)
                 residual.add_edge(adjacent, node, 0) if not self.has_edge(adjacent, node) else None
 
         max_flow = 0
 
         while residual.bfs(s, t, parent):
-            path_flow = float("Inf") 
+            path_flow = float("Inf")
             v = t
 
             while v != s:
-                u = parent[v] 
+                u = parent[v]
                 path_flow = min(path_flow, residual.edge_weight(u,v))
                 v = parent[v]
 
             v = t
             while v != s:
-                u = parent[v] 
+                u = parent[v]
                 residual.update_weight(u, v, residual.edge_weight(u,v) - path_flow)
-                residual.update_weight(v, u, residual.edge_weight(v,u) + path_flow) 
+                residual.update_weight(v, u, residual.edge_weight(v,u) + path_flow)
                 v = parent[v]
 
             max_flow += path_flow

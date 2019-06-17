@@ -1,49 +1,63 @@
+from graph import Graph
 #
-# - jugador: valor entero - {1,2}
-# - ciudades: lista - elemento = (ciudad, cant_especia)
-# - rutas: diccionario - (K, V) = ((c1, c2), capacidad)
+# - player: inv value - {1,2}
+# - cities: list - element = (city, species)
+# - routes: dictionary of dictionaries - (K, V) = ((c1, c2), capacidad)
 #
 # return:
 #   - lista de ciudades ordenadas por prioridad
 #
-def select(jugador, ciudades, rutas):
+def select(player, cities, routes):
 
-    selec = []
-    metropoli = ciudades[jugador - 1][0]
+    selection = []
+    metropolis, production = cities[player - 1]
 
-    # Las dos primeras ciudades son
-    # las metropoli de cada uno de
-    # los jugadores
-    posibles_ciudades = ciudades[2:]
+    levels, max_level = determine_levels(metropolis, cities, routes)
 
-    # Se ordenan las ciudades por cantidad
-    # de especia que pueden producir
-    posibles_ciudades = sorted(posibles_ciudades,
-                                key=lambda x: x[1],
+    extended_cities = []
+    # The first two cities are metropolis
+    for name, production in cities[2:]:
+        city = (name, production, max_level - levels[name])
+        extended_cities.append(city)
+
+
+    # We sort the cities first by their distance to the
+    # metripolis and then by their species production
+    extended_cities = sorted(extended_cities,
+                                key=lambda x: (x[2], x[1]),
                                 reverse=True)
 
-    for ciudad, cant in posibles_ciudades:
-        if (ciudad, metropoli) in rutas:
-            selec.append(ciudad)
+    for name, production, level in extended_cities:
+        selection.append(name)
 
-    return selec
+    return selection
+
+def determine_levels(metropolis, cities, routes):
+
+    g = Graph(True)
+
+    for name, production in cities:
+        g.add_node(name)
+
+    for origin, destinations in routes.items():
+            for destination in destinations.keys():
+                    g.add_edge(origin, destination, routes[origin][destination])
+
+    # Get max flow
+    levels = g.levels(metropolis)
+    return levels
 
 if __name__ == "__main__":
 
-    ciudades = [("Buenos Aires", 0),
+    cities = [("Buenos Aires", 0),
             ("Moscu", 0),
             ("Rio de Janeiro", 3),
             ("Washigton", 2),
             ("Roma", 6),
             ("Madrid", 4),
             ("Montevideo", 5)]
-   
-    rutas = {("Buenos Aires", "Montevideo"): 3,
-            ("Buenos Aires", "Madrid"): 4,
-            ("Buenos Aires", "Rio de Janeiro"): 7,
-            ("Moscu", "Roma"): 6,
-            ("Moscu", "Washigton"): 3}
 
-    print(select(1, ciudades, rutas))
-    print(select(2, ciudades, rutas))
-    
+    routes = {"Buenos Aires": {"Montevideo": 3, "Madrid": 4, "Rio de Janeiro": 7},"Moscu":{"Roma": 6,"Washigton": 3}, "Madrid":{"Moscu": 3}, "Roma":{"Buenos Aires": 3}}
+
+    print(select(1, cities, routes))
+    print(select(2, cities, routes))
