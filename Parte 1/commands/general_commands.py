@@ -97,7 +97,7 @@ def flow(player, metropoles, cities, routes, imp, added_city = None, removed_cit
                     g.add_edge(origin, destination, routes[origin][destination])
 
     for city in imp.keys():
-        g.add_edge(start, city, cities[origin].production())
+        g.add_edge(start, city, cities[city].production())
 
     # Get max flow
     flow = g.ford_fulkerson(start, metropolis)
