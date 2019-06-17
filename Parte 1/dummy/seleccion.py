@@ -33,7 +33,7 @@ def main(player, cities_path, routes_path):
 
     routes = create_routes_dict(routes_path)
 
-    s = select_dummy(player, cities, routes)
+    s = select(player, cities, routes)
 
     write_file(s, player)
 
