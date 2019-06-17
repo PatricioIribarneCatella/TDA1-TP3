@@ -6,30 +6,26 @@ class City():
         self._production = 0
         self._armies = 0
 
-    @property
-    def name(self):
+    def get_name(self):
         return self._name
 
-    @property
-    def production(self):
+    def get_production(self):
         return self._production
 
-    @property
-    def armies(self):
+    def get_armies(self):
         return self._armies
 
-    @property
-    def player(self):
+    def get_player(self):
         return self._player
 
-    def set_player(player):
+    def set_player(self, player):
         self._player = player
 
-    def set_armies(armies):
+    def set_armies(self, armies):
         self._armies = armies
 
-    def set_production(production):
+    def set_production(self, production):
         self._production = production
 
-    def is_metropolis():
+    def is_metropolis(self):
         return False

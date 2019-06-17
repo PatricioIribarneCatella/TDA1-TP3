@@ -45,7 +45,7 @@ def maximize_armies_on_important_cities(player, cities, routes, imp, harvest, en
             e = flow(enemy_player, metropoles, cities, routes, enemy_imp, None, None) # calculate flow from imp2 city to enemy metropolis
             f = flow(enemy_player, metropoles, cities, routes, enemy_imp, None, enemy_city) # calculate flow from imp2 minus enemy city to enemy metropolis
             g = e-f
-            h = cities[enemy_city].production() # enemy_city species production
+            h = cities[enemy_city].get_production() # enemy_city species production
 
             i = c + g + d # how valuable is enemy_city
             enemy_cities_scores[enemy_city] = i
@@ -87,7 +87,7 @@ def produce(player, metropoles, cities, routes, imp1, h1, imp2, h2):
     # get previous ammount of armies
     current_armies = 0
     for city in imp.values():
-        current_armies += city.armies()
+        current_armies += city.get_armies()
 
     # remove 1 army for every city so that im not left with cities with 0 armies
     for city in imp.keys(): # every city must have at least 1 army

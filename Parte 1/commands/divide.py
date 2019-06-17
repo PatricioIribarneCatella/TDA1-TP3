@@ -22,10 +22,10 @@ def divide(ciudades, rutas, s1, s2):
         c1 = s1[i]
         c2 = s2[i]
         if c1 != c2:
-            if c1 not in dominadas: 
+            if c1 not in dominadas:
                 dominadas[c1] = 1
             if c2 not in dominadas:
-                dominadas[c2] = 2 
+                dominadas[c2] = 2
     i += 1
 
     if i == len(s1):
@@ -56,7 +56,7 @@ def test(msg, ciudades, s1, s2):
     print(msg)
 
     i1, i2 = divide(ciudades, {}, s1, s2)
-    
+
     print(i1)
     print(i2)
     print("")
@@ -84,4 +84,3 @@ if __name__ == "__main__":
          ciudades,
          ["Montevideo", "Madrid", "Rio de Janeiro"],
          ["Roma", "Madrid"])
-

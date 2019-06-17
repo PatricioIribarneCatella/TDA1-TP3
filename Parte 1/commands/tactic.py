@@ -1,9 +1,9 @@
 import math
-from graph import Graph
-from city import City
-from metropolis import Metropolis
-from general_commands import flow
-from general_commands import are_neighbours
+from commands.graph import Graph
+from commands.city import City
+from commands.metropolis import Metropolis
+from commands.general_commands import flow
+from commands.general_commands import are_neighbours
 
 def tactic(player, metropoles, cities, cities_dict, routes, imp1, h1, imp2, h2):
 
@@ -24,14 +24,14 @@ def tactic(player, metropoles, cities, cities_dict, routes, imp1, h1, imp2, h2):
             e = flow(enemy_player, metropoles, cities, routes, enemy_imp, None, None) # calculate flow from imp2 city to enemy metropolis
             f = flow(enemy_player, metropoles, cities, routes, enemy_imp, None, enemy_city) # calculate flow from imp2 minus enemy city to enemy metropolis
             g = e-f
-            h = cities_dict[enemy_city].production() # enemy_city species production
+            h = cities_dict[enemy_city].get_production() # enemy_city species production
 
             i = c + g + d # how valuable is enemy_city
             enemy_cities_scores[enemy_city] = i
 
     attack = []
     for city in imp.keys():
-        city_army = city.armies()
+        city_army = city.get_armies()
         attacking_force = city_army - 1
 
         # total score of neighbouring enemy cities

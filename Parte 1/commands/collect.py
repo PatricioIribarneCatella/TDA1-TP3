@@ -1,7 +1,4 @@
-from general_commands import flow
+from commands.general_commands import flow
 
 def collect(player, metropoles, cities, routes, imp, pharvest):
-
-    flow =  flow(player, metropoles, cities, routes, imp, None, None)
-
-    return flow + pharvest
+    return flow(player, metropoles, cities, routes, imp, None, None) + pharvest

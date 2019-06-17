@@ -56,7 +56,7 @@ class Graph():
 
         while queue:
             current = queue.popleft()
-                
+
             for adjacent, weight in self.adjacency_list[current].items():
                 if not adjacent in visited:
                     queue.append(adjacent)
@@ -67,7 +67,7 @@ class Graph():
 
     def ford_fulkerson(self, s, t):
 
-        parent = { node: None for node in graph.adjacency_list }
+        parent = { node: None for node in self.adjacency_list }
         residual = Graph(direct_graph = True)
         for node, adjacents in self.adjacency_list.items():
             residual.add_node(node) if not node in residual else None

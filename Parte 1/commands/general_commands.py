@@ -1,18 +1,20 @@
 import csv
+from commands.graph import Graph
+from commands.city import City
+from commands.metropolis import Metropolis
 
 def create_metropolis_dict(cities_file_name):
     with open(cities_file_name) as cities_file:
-        cities_csv = csv.reader(cities_file)
         metropolis = {}
-        name, production = cities_csv.readline()
+        name, production = cities_file.readline().rstrip('\n').split(",")
         metropolis[1] = [name, Metropolis(name, 1)]
-        name, production = cities_csv.readline()
+        name, production = cities_file.readline().rstrip('\n').split(",")
         metropolis[2] = [name, Metropolis(name, 2)]
     return metropolis
 
 def create_cities_dict(cities_file_name):
     with open(cities_file_name) as cities_file:
-        cities_csv = csv.reader(cities_file)
+        cities_csv = csv.reader(cities_file, delimiter=',')
         cities = {}
         counter = 1
         for name, production in cities_csv:
@@ -41,7 +43,7 @@ def create_imperium_dict(imperium_file_name, player):
         imperium = {}
         counter = 1
         for name, armies in imperium_csv:
-            if couter == 1:
+            if counter == 1:
                 city = Metropolis(name, player)
             else:
                 city = City(name)
@@ -60,7 +62,7 @@ def create_attack_dict(attack1_path, player):
             attack[origin][destination] = int(armies)
     return attack
 
-def get_harvest(harvest1_path):
+def get_harvest(harvest_path):
     try:
         with open(harvest_path) as harvest_file:
             pharvest = int(harvest_file.readline())
@@ -97,7 +99,6 @@ def flow(player, metropoles, cities, routes, imp, added_city = None, removed_cit
                     g.add_edge(origin, destination, routes[origin][destination])
 
     for city in imp.keys():
-        g.add_edge(start, city, cities[origin].production())
+        g.add_edge(start, city, cities[city].get_production())
 
-    # Get max flow
-    flow = g.ford_fulkerson(start, metropolis)
+    return g.ford_fulkerson(start, metropolis)
