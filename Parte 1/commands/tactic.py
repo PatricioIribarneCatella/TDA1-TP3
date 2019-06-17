@@ -24,9 +24,8 @@ def tactic(player, metropoles, cities, routes, imp1, h1, imp2, h2):
             d = flow(enemy_player, metropoles, cities, routes, enemy_imp.copy(), None, None) # calculate flow from imp2 city to enemy metropolis
             e = flow(enemy_player, metropoles, cities, routes, enemy_imp.copy(), None, enemy_city) # calculate flow from imp2 minus enemy city to enemy metropolis
             f = d-e
-            g = cities[enemy_city].get_production() # enemy_city species production
 
-            i = c + f + g # how valuable is enemy_city
+            i = c + f # how valuable is enemy_city
             enemy_cities_scores[enemy_city] = i
 
     attack = []
@@ -40,13 +39,19 @@ def tactic(player, metropoles, cities, routes, imp1, h1, imp2, h2):
             if enemy_city in enemy_cities_scores and are_neighbours(city_name, enemy_city, routes):
                 x += enemy_cities_scores[enemy_city]
 
+        list_of_sorted_neighbour_enemy_cities = []
         for enemy_city in cities.keys():
             if enemy_city in enemy_cities_scores and are_neighbours(city_name, enemy_city, routes):
-                j = math.ceil(attacking_force * (enemy_cities_scores[enemy_city]/float(x)))
-                x -= enemy_cities_scores[enemy_city]
-                if j > 0:
-                    attack.append([city_name,enemy_city,j])
-                attacking_force -= j
-                if attacking_force <= 0:
-                    break
+                list_of_sorted_neighbour_enemy_cities.append(enemy_city)
+
+        list_of_sorted_neighbour_enemy_cities.sort(key=lambda x: enemy_cities_scores[x], reverse=True)
+
+        for enemy_city in list_of_sorted_neighbour_enemy_cities:
+            j = math.ceil(attacking_force * (enemy_cities_scores[enemy_city]/float(x)))
+            x -= enemy_cities_scores[enemy_city]
+            if j > 0:
+                attack.append([city_name,enemy_city,j])
+            attacking_force -= j
+            if attacking_force <= 0:
+                break
     return attack
