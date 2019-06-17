@@ -58,10 +58,13 @@ def create_attack_dict(attack1_path, player):
         attack[origin][destination] = int(armies)
     return attack
 
-def get_harvest(harvest_file_name):
-    with open(harvest_file_name) as harvest_file:
-    collect_csv = csv.reader(harvest_file)
-    return int(harvest_csv.readline()[0])
+def get_harvest(harvest1_path):
+    try:
+        with open(harvest_path) as harvest_file:
+            pharvest = int(harvest_file.readline())
+    except FileNotFoundError:
+        pharvest = 0
+    return pharvest
 
 def get_metropolis(metropoles, player):
     name, metropolis = metropoles[player]

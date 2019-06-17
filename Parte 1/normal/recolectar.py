@@ -17,39 +17,13 @@ def write_file(harvest, player):
 
 def main(player, cities_path, routes_path, imp_path):
 
-    cities = []
+    metropoles = create_metropolis_dict(cities_path)
+    cities = create_cities_dict(cities_path)
+    routes = create_routes_dict(routes_path)
+    imp = create_imperium_dict(imp_path, player)
+    pharvest = get_harvest(HARVEST_FILE.format(player))
 
-    with open(cities_path) as f:
-        cities_csv = csv.reader(f)
-        counter = 1
-        for name, production in cities_csv:
-            if counter <= 2:
-                cities.append((name, production))
-            else:
-                cities.append((name, production))
-            counter += 1
-
-    routes = {}
-
-    with open(routes_path) as f:
-        routes_csv = csv.reader(f)
-        for origin, destination, capacity in routes_csv:
-            routes[(origin, destination)] = capacity
-
-    imp = {}
-
-    with open(imp_path) as f:
-        imp_csv = csv.reader(f)
-        for city, army in imp_csv:
-            imp[city] = int(army)
-
-    try:
-        with open(HARVEST_FILE.format(player)) as f:
-            pharvest = int(f.readline())
-    except FileNotFoundError:
-        pharvest = 0
-
-    harvest = collect(player, cities, routes, imp, pharvest)
+    harvest = collect(player, metropoles, cities, routes, imp, pharvest)
 
     write_file(harvest, player)
 
@@ -81,4 +55,3 @@ if __name__ == "__main__":
              params["cities"],
              params["routes"],
              params["imp"])
-
