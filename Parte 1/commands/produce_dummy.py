@@ -31,9 +31,10 @@ def maximize_armies_on_important_cities(player, metropoles, cities, routes, imp,
 
     while current_armies > 0:
         for city in imp.keys():
-            if current_armies > 0:
-                temporary_imperium_dic[city] += 1
-                current_armies-= 1
+            temporary_imperium_dic[city] += 1
+            current_armies-= 1
+            if current_armies <= 0:
+                break
 
     temporary_imperium = []
     for city, armies in temporary_imperium_dic.items():

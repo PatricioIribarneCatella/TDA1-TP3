@@ -16,7 +16,7 @@ def safeguard_metropolis(player, metropoles, cities, routes, imp, enemy_imp, cur
     for city in metropolis_neighbours.keys():
         for enemy_city in enemy_imp.keys():
             if are_neighbours(city, enemy_city, routes):
-                metropolis_neighbours[destination] += 1
+                metropolis_neighbours[city] += 1
 
     selected_neighbour = None
     for neighbour in metropolis_neighbours.keys():
@@ -34,7 +34,7 @@ def safeguard_metropolis(player, metropoles, cities, routes, imp, enemy_imp, cur
 
     return temporary_imperium
 
-def maximize_armies_on_important_cities(player, metropoles, cities, routes, imp, harvest, enemy_imp, enemy_harvest, enemy_player,  current_armies):
+def maximize_armies_on_important_cities(player, metropoles, cities, routes, imp, enemy_imp, enemy_player,  current_armies):
     #calculate score for every enemy city
     enemy_cities_scores = {}
     for enemy_city in cities.keys(): #I have to consider cities that are not in the enemy imperium nor in mine
@@ -111,6 +111,6 @@ def produce(player, metropoles, cities, routes, imp1, h1, imp2, h2):
         current_armies += harvest * 2
         temporary_harvest-= harvest
 
-        temporary_imperium = maximize_armies_on_important_cities(player, metropoles, cities, routes, imp, harvest, enemy_imp, enemy_harvest, enemy_player,  current_armies)
+        temporary_imperium = maximize_armies_on_important_cities(player, metropoles, cities, routes, imp, enemy_imp, enemy_player,  current_armies)
 
     return temporary_harvest, temporary_imperium
