@@ -17,7 +17,7 @@ def tactic(player, metropoles, cities, cities_dict, routes, imp1, h1, imp2, h2):
     #calculate score for every enemy city
     enemy_cities_scores = {}
     for enemy_city in cities_dict.keys(): #I have to consider cities that are not in the enemy imperium nor in mine
-        if not cities_dict[enemy_city].is_metropolis() and not imp.has_key(enemy_city):
+        if not cities_dict[enemy_city].is_metropolis() and enemy_city not in imp:
             a = flow(player, metropoles, cities, routes, imp, None, None) # calculate flow from imp1 city to my metropolis
             b = flow(player, metropoles, cities, routes, imp, enemy_city, None) # calculate flow from imp1 plus enemy city to my metropolis
             c = b-a
@@ -37,11 +37,11 @@ def tactic(player, metropoles, cities, cities_dict, routes, imp1, h1, imp2, h2):
         # total score of neighbouring enemy cities
         x = 0
         for enemy_city in cities_dict.keys():
-            if enemy_cities_scores.has_key(enemy_city) and are_neighbours(city, enemy_city, routes):
+            if enemy_city in enemy_cities_scores and are_neighbours(city, enemy_city, routes):
                 x += enemy_cities_scores[enemy_city]
 
         for enemy_city in cities_dict.keys():
-            if enemy_cities_scores.has_key(enemy_city) and are_neighbours(city, enemy_city, routes):
+            if enemy_city in enemy_cities_scores and are_neighbours(city, enemy_city, routes):
                 j = math.ceil(attacking_force * (enemy_cities_scores[enemy_city]/float(x)))
                 x -= enemy_cities_scores[enemy_city]
                 if j > 0:

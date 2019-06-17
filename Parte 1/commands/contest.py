@@ -5,14 +5,14 @@ def join_armies(attack):
     attack = {}
     for origin, destinations in attack.items():
         for destination, army in destinations.items():
-            if not attack.has_key(destination):
+            if destination not in attack:
                 attack[destination] = 0
             attack[destination] += army
 
 def remove_attacking_armies(imperium, attack):
     defense_imperium = {}
     for city in imperium.keys():
-        if attack.has_key(city):
+        if city in attack:
             defense_imperium[city] = imperium[city].armies() - sum(attack[city].values())
     return defense_imperium
 

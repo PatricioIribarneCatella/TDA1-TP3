@@ -1,61 +1,63 @@
+import csv
+
 def create_metropolis_dict(cities_file_name):
     with open(cities_file_name) as cities_file:
-    cities_csv = csv.reader(cities_file)
-    metropolis = {}
-    name, production = cities_csv.readline()
-    metropolis[1] = [name, Metropolis(name, 1)]
-    name, production = cities_csv.readline()
-    metropolis[2] = [name, Metropolis(name, 2)]
+        cities_csv = csv.reader(cities_file)
+        metropolis = {}
+        name, production = cities_csv.readline()
+        metropolis[1] = [name, Metropolis(name, 1)]
+        name, production = cities_csv.readline()
+        metropolis[2] = [name, Metropolis(name, 2)]
     return metropolis
 
 def create_cities_dict(cities_file_name):
     with open(cities_file_name) as cities_file:
-    cities_csv = csv.reader(cities_file)
-    cities = {}
-    counter = 1
-    for name, production in cities_csv:
-        if counter <= 2:
-            city = Metropolis(name, counter)
-        else:
-            city = City(name)
-        city.set_production(int(production))
-        cities[name] = city
-        counter += 1
+        cities_csv = csv.reader(cities_file)
+        cities = {}
+        counter = 1
+        for name, production in cities_csv:
+            if counter <= 2:
+                city = Metropolis(name, counter)
+            else:
+                city = City(name)
+            city.set_production(int(production))
+            cities[name] = city
+            counter += 1
     return cities
 
 def create_routes_dict(routes_file_name):
     with open(routes_file_name) as routes_file:
-    routes_csv = csv.reader(routes_file)
-    routes = {}
-    for origin, destination, production in routes_csv:
-        if not routes.has_key(origin):
-            routes[origin] = {}
-        routes[origin][destination] = int(capacity)
-    return metropolis, cities
+        routes_csv = csv.reader(routes_file)
+        routes = {}
+        for origin, destination, capacity in routes_csv:
+            if origin not in routes:
+                routes[origin] = {}
+            routes[origin][destination] = int(capacity)
+    return routes
 
 def create_imperium_dict(imperium_file_name, player):
     with open(imperium_file_name) as imperium_file:
-    imperium_csv = csv.reader(imperium_file)
-    imperium = {}
-    counter = 1
-    for name, armies in imperium_csv:
-        if couter == 1:
-            city = Metropolis(name, player)
-        else:
-            city = City(name)
-        city.set_armies(int(armies))
-        imperium[name] = city
-        counter += 1
+        imperium_csv = csv.reader(imperium_file)
+        imperium = {}
+        counter = 1
+        for name, armies in imperium_csv:
+            if couter == 1:
+                city = Metropolis(name, player)
+            else:
+                city = City(name)
+            city.set_armies(int(armies))
+            imperium[name] = city
+            counter += 1
     return imperium
 
 def create_attack_dict(attack1_path, player):
     with open(attack1_path) as attack_file:
-    attack_csv = csv.reader(attack_file)
-    attack = {}
-    for origin, destination, armies in attack_csv:
-        if not attack.has_key(origin):
-            attack[origin] = {}
-        attack[origin][destination] = int(armies)
+        attack_csv = csv.reader(attack_file)
+        attack = {}
+        for origin, destination, armies in attack_csv:
+            if origin not in attack:
+                attack[origin] = {}
+            attack[origin][destination] = int(armies)
     return attack
 
 def get_harvest(harvest1_path):
@@ -71,13 +73,13 @@ def get_metropolis(metropoles, player):
     return name
 
 def are_neighbours(city, other_city, routes):
-    return routes[city].has_key(other_city) or routes[other_city].has_key(city)
+    return other_city in routes[city] or city in routes[other_city]
 
 def flow(player, metropoles, cities, routes, imp, added_city = None, removed_city = None):
     if added_city:
         imp[added_city] = City(added_city)
     if removed_city:
-        if imp.has_key(removed_city):
+        if removed_city in imp:
             imp.pop(removed_city)
 
     metropolis = get_metropolis(metropoles, player)

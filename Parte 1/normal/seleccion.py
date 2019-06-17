@@ -7,6 +7,8 @@ from os import path
 sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 
 from commands.select import select
+from commands.graph import Graph
+from commands.general_commands import create_routes_dict
 
 SELECTION_FILE = "seleccion{}.txt"
 
@@ -30,12 +32,7 @@ def main(player, cities_path, routes_path):
                 cities.append((name, production))
             counter += 1
 
-    routes = {}
-
-    with open(routes_path) as f:
-        routes_csv = csv.reader(f)
-        for origin, destination, capacity in routes_csv:
-            routes[(origin, destination)] = capacity
+    routes = create_routes_dict(routes_path)
 
     s = select(player, cities, routes)
 
@@ -67,4 +64,3 @@ if __name__ == "__main__":
         main(params["player"],
              params["cities"],
              params["routes"])
-

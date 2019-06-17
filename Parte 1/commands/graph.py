@@ -56,7 +56,7 @@ class Graph():
 
         while queue:
             current = queue.popleft()
-
+                
             for adjacent, weight in self.adjacency_list[current].items():
                 if not adjacent in visited:
                     queue.append(adjacent)

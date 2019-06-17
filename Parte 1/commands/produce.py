@@ -38,7 +38,7 @@ def maximize_armies_on_important_cities(player, cities, routes, imp, harvest, en
     #calculate score for every enemy city
     enemy_cities_scores = {}
     for enemy_city in cities.keys(): #I have to consider cities that are not in the enemy imperium nor in mine
-        if not cities[enemy_city].is_metropolis() and not imp.has_key(enemy_city):
+        if not cities[enemy_city].is_metropolis() and enemy_city not in imp:
             a = flow(player, metropoles, cities, routes, imp, None, None) # calculate flow from imp1 city to my metropolis
             b = flow(player, metropoles, cities, routes, imp, enemy_city, None) # calculate flow from imp1 plus enemy city to my metropolis
             c = b-a
@@ -56,7 +56,7 @@ def maximize_armies_on_important_cities(player, cities, routes, imp, harvest, en
         # total score of neighbouring enemy cities
         j = 0
         for enemy_city in cities.keys():
-            if enemy_cities_scores.has_key(enemy_city) and are_neighbours(city, enemy_city, routes):
+            if enemy_city in enemy_cities_scores and are_neighbours(city, enemy_city, routes):
                 j += enemy_cities_scores[enemy_city]
         cities_scores[city] = j
 

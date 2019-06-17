@@ -1,4 +1,4 @@
-from graph import Graph
+from commands.graph import Graph
 #
 # - player: inv value - {1,2}
 # - cities: list - element = (city, species)
