@@ -6,7 +6,7 @@ from os import path
 
 sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 
-from commands.select_dummy import select_dummy
+from commands.select import select
 from commands.general_commands import create_routes_dict
 
 SELECTION_FILE = "seleccion{}.txt"
