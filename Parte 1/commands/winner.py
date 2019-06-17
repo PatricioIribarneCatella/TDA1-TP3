@@ -46,3 +46,5 @@ def harvest_winner(harvest1, harvest2):
             winner = 1
         else:
             winner = 2
+    return winner
+

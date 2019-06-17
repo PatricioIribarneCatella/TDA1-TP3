@@ -12,6 +12,10 @@ from commands.general_command import create_routes_dict
 from commands.general_command import create_imperium_dict
 from commands.general_command import get_harvest
 
+from commands.winner import harvest_winner
+from commands.winner import disconection_winner
+from commands.winner import fifty_rounds_winner
+
 WINNER_FILE = "ganador.txt"
 
 def create_winner_file(self, winner):
@@ -40,7 +44,7 @@ def main(self, round, cities, routes, imperium1, harvest1, imperium2, harvest2):
         if disconection_winner:
             winner = disconection_winner
         else:
-            winner = fifty_rounds_winner(harvest1, harvest2, imperium1, imperium2)
+            winner = fifty_rounds_winner(round, harvest1, harvest2, imperium1, imperium2)
 
     create_winner_file(self, winner)
 
