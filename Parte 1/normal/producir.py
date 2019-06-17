@@ -10,6 +10,7 @@ from commands.produce import produce
 from commands.general_commands import create_cities_dict
 from commands.general_commands import create_routes_dict
 from commands.general_commands import create_imperium_dict
+from commands.general_commands import create_metropolis_dict
 from commands.general_commands import get_harvest
 
 HARVEST_FILE = "cosecha{}_temp.txt"
@@ -28,19 +29,8 @@ def main(player, cities_path, routes_path,
          imp1_path, harvest1_path,
          imp2_path, harvest2_path):
 
-    cities = []
-
-    with open(cities_path) as f:
-        cities_csv = csv.reader(f)
-        counter = 1
-        for name, production in cities_csv:
-            if counter <= 2:
-                cities.append((name, production))
-            else:
-                cities.append((name, production))
-            counter += 1
-
-    cities_dict = create_cities_dict(cities_path)
+    metropoles = create_metropolis_dict(cities_path)
+    cities = create_cities_dict(cities_path)
     routes = create_routes_dict(routes_path)
     imp1 = create_imperium_dict(imp1_path, 1)
     imp2 = create_imperium_dict(imp1_path, 2)

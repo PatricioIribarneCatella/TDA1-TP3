@@ -2,57 +2,8 @@ import math
 from graph import Graph
 from city import City
 from metropolis import Metropolis
-
-def find(cities, c):
-    for e in cities:
-        if e[0] == c:
-            return e[1]
-
-def flow(player, cities, routes, imp, added_city, removed_city):
-    if added_city:
-        imp[added_city] = City(added_city)
-    if removed_city:
-        if imp.has_key(removed_city):
-            imp.pop(removed_city)
-
-    metropolis = cities[player - 1][0]
-
-    g = Graph(True)
-
-    g.add_node(0, "source")
-
-    mapping = {}
-    for e in enumerate(imp.keys()):
-        g.add_node(e[0] + 1, e[1])
-        mapping[e[0] + 1] = e[1]
-
-    g.add_node(e[0] + 2, metropolis)
-    metropolis_num = e[0] + 2
-
-    # Add edges between "source" and
-    # cities. Flow capacity in the edge is the
-    # max production capacity of the city
-    for v in range(1, len(imp.keys()) + 1):
-        g.add_edge(0, v, find(cities, mapping[v]))
-
-    # Add edges between cities and "metropoli"
-    for w in range(1, len(imp.keys()) + 1):
-        if (mapping[w], metropolis) in routes:
-            g.add_edge(w, metropolis_num, routes[(mapping[w], metropolis)])
-
-    # Add edges between cities
-    for n, city1 in enumerate(imp.keys()):
-        for k, city2 in enumerate(imp.keys()):
-            if (city1, city2) in routes:
-                g.add_edge(n + 1, k + 1, routes[city1, city2])
-
-    # Get max flow
-    flow = g.ford_fulkerson(0, metropolis_num)
-
-    return flow
-
-def are_neighbours(city, other_city, routes):
-    return routes[city].has_key(other_city) or routes[other_city].has_key(city)
+from general_commands import flow
+from general_commands import are_neighbours
 
 def tactic(player, metropoles, cities, cities_dict, routes, imp1, h1, imp2, h2):
 
@@ -67,11 +18,11 @@ def tactic(player, metropoles, cities, cities_dict, routes, imp1, h1, imp2, h2):
     enemy_cities_scores = {}
     for enemy_city in cities_dict.keys(): #I have to consider cities that are not in the enemy imperium nor in mine
         if not cities_dict[enemy_city].is_metropolis() and not imp.has_key(enemy_city):
-            a = flow(player, cities, routes, imp, None, None) # calculate flow from imp1 city to my metropolis
-            b = flow(player, cities, routes, imp, enemy_city, None) # calculate flow from imp1 plus enemy city to my metropolis
+            a = flow(player, metropoles, cities, routes, imp, None, None) # calculate flow from imp1 city to my metropolis
+            b = flow(player, metropoles, cities, routes, imp, enemy_city, None) # calculate flow from imp1 plus enemy city to my metropolis
             c = b-a
-            e = flow(enemy_player, cities, routes, enemy_imp, None, None) # calculate flow from imp2 city to enemy metropolis
-            f = flow(enemy_player, cities, routes, enemy_imp, None, enemy_city) # calculate flow from imp2 minus enemy city to enemy metropolis
+            e = flow(enemy_player, metropoles, cities, routes, enemy_imp, None, None) # calculate flow from imp2 city to enemy metropolis
+            f = flow(enemy_player, metropoles, cities, routes, enemy_imp, None, enemy_city) # calculate flow from imp2 minus enemy city to enemy metropolis
             g = e-f
             h = cities_dict[enemy_city].production() # enemy_city species production
 

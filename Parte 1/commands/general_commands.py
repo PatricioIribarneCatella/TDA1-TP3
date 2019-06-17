@@ -3,9 +3,9 @@ def create_metropolis_dict(cities_file_name):
     cities_csv = csv.reader(cities_file)
     metropolis = {}
     name, production = cities_csv.readline()
-    metropolis[name] = Metropolis(name, 1)
+    metropolis[1] = [name, Metropolis(name, 1)]
     name, production = cities_csv.readline()
-    metropolis[name] = Metropolis(name, 2)
+    metropolis[2] = [name, Metropolis(name, 2)]
     return metropolis
 
 def create_cities_dict(cities_file_name):
@@ -64,8 +64,35 @@ def get_harvest(harvest_file_name):
     return int(harvest_csv.readline()[0])
 
 def get_metropolis(metropoles, player):
-    player_metropolis = None
-    for name, metropolis in metropoles.items():
-        if metropolis.superpower() == player:
-            player_metropolis = name
-    return player_metropolis
+    name, metropolis = metropoles[player]
+    return name
+
+def are_neighbours(city, other_city, routes):
+    return routes[city].has_key(other_city) or routes[other_city].has_key(city)
+
+def flow(player, metropoles, cities, routes, imp, added_city = None, removed_city = None):
+    if added_city:
+        imp[added_city] = City(added_city)
+    if removed_city:
+        if imp.has_key(removed_city):
+            imp.pop(removed_city)
+
+    metropolis = get_metropolis(metropoles, player)
+    g = Graph(True)
+
+    start = "start"
+    g.add_node(start)
+    for city in imp.keys():
+        g.add_node(city)
+
+    for origin, destinations in routes.items():
+        if origin in imp.keys():
+            for destination in destinations.keys():
+                if destination in imp.keys():
+                    g.add_edge(origin, destination, routes[origin][destination])
+
+    for city in imp.keys():
+        g.add_edge(start, city, cities[origin].production())
+
+    # Get max flow
+    flow = g.ford_fulkerson(start, metropolis)
