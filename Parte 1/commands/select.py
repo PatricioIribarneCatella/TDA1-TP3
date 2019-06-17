@@ -1,4 +1,4 @@
-from graph import Graph
+from commands.graph import Graph
 #
 # - player: inv value - {1,2}
 # - cities: list - element = (city, species)
@@ -77,4 +77,3 @@ if __name__ == "__main__":
 
     print(select(1, cities, routes))
     print(select(2, cities, routes))
-

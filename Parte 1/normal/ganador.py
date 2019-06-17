@@ -6,47 +6,31 @@ from os import path
 
 sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 
-from commands.general_command import create_metropolis_dict
-from commands.general_command import create_cities_dict
-from commands.general_command import create_routes_dict
-from commands.general_command import create_imperium_dict
-from commands.general_command import get_harvest
-
-from commands.winner import harvest_winner
-from commands.winner import disconection_winner
-from commands.winner import fifty_rounds_winner
+from commands.winner import winner
+from commands.general_commands import create_metropolis_dict
+from commands.general_commands import create_routes_dict
+from commands.general_commands import create_imperium_dict
+from commands.general_commands import get_harvest
 
 WINNER_FILE = "ganador.txt"
 
-def create_winner_file(self, winner):
+def create_winner_file(winner):
         with open(WINNER_FILE, "w") as winner_file:
+            if winner:
                 winner_file.write("%s\n" % winner)
 
-def main(self, round, cities, routes, imperium1, harvest1, imperium2, harvest2):
-
-    winner = None
+def main(round, cities, routes, imperium1, harvest1, imperium2, harvest2):
 
     metropoles = create_metropolis_dict(cities)
-
     routes = create_routes_dict(routes)
-
     imperium1 = create_imperium_dict(imperium1, 1)
     imperium2 = create_imperium_dict(imperium2, 2)
-
     harvest1 = get_harvest(harvest1)
     harvest2 = get_harvest(harvest2)
 
-    harvest_winner = harvest_winner(harvest1, harvest2)
-    if harvest_winner:
-        winner = harvest_winner
-    else:
-        disconection_winner = disconection_winner(metropoles, routes, imperium1, imperium2)
-        if disconection_winner:
-            winner = disconection_winner
-        else:
-            winner = fifty_rounds_winner(round, harvest1, harvest2, imperium1, imperium2)
+    game_winner = winner(round, metropoles, routes, imperium1, harvest1, imperium2, harvest2)
 
-    create_winner_file(self, winner)
+    create_winner_file(game_winner)
 
 def parse_input(params):
 
@@ -56,7 +40,6 @@ def parse_input(params):
         return None
 
     round = int(params[1])
-
     cities = params[2]
     routes = params[3]
     imperium1 = params[4]

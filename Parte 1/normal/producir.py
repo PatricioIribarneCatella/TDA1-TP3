@@ -33,11 +33,11 @@ def main(player, cities_path, routes_path,
     cities = create_cities_dict(cities_path)
     routes = create_routes_dict(routes_path)
     imp1 = create_imperium_dict(imp1_path, 1)
-    imp2 = create_imperium_dict(imp1_path, 2)
+    imp2 = create_imperium_dict(imp2_path, 2)
     h1 = get_harvest(harvest1_path)
     h2 = get_harvest(harvest2_path)
 
-    harvest_temp, imp_temp = produce(player, cities, routes, imp1, h1, imp2, h2)
+    harvest_temp, imp_temp = produce(player, metropoles, cities, routes, imp1, h1, imp2, h2)
 
     write_file(player, harvest_temp, imp_temp)
 

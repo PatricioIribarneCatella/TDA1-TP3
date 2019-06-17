@@ -1,6 +1,6 @@
-from city import City
-from metropolis import Metropolis
-from general_commands import get_metropolis
+from commands.city import City
+from commands.metropolis import Metropolis
+from commands.general_commands import get_metropolis
 
 def fifty_rounds_winner(round, harvest1, harvest2, imperium1, imperium2, routes):
     winner = None
@@ -47,3 +47,16 @@ def harvest_winner(harvest1, harvest2):
         else:
             winner = 2
     return winner
+
+def winner(round, metropoles, routes, imperium1, harvest1, imperium2, harvest2):
+        winner = None
+        game_harvest_winner = harvest_winner(harvest1, harvest2)
+        if game_harvest_winner:
+            winner = game_harvest_winner
+        else:
+            game_disconection_winner = disconection_winner(metropoles, routes, imperium1, imperium2)
+            if game_disconection_winner:
+                winner = game_disconection_winner
+            else:
+                winner = fifty_rounds_winner(round, harvest1, harvest2, imperium1, imperium2, routes)
+        return winner

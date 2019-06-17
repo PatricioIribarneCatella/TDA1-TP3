@@ -1,10 +1,10 @@
 import math
-from graph import Graph
-from city import City
-from metropolis import Metropolis
-from general_commands import get_metropolis
-from general_commands import flow
-from general_commands import are_neighbours
+from commands.graph import Graph
+from commands.city import City
+from commands.metropolis import Metropolis
+from commands.general_commands import get_metropolis
+from commands.general_commands import flow
+from commands.general_commands import are_neighbours
 
 def safeguard_metropolis(player, metropoles, cities, routes, imp, enemy_imp, current_armies):
     metripolis = get_metropolis(metropoles, player)
@@ -34,20 +34,20 @@ def safeguard_metropolis(player, metropoles, cities, routes, imp, enemy_imp, cur
 
     return temporary_imperium
 
-def maximize_armies_on_important_cities(player, cities, routes, imp, harvest, enemy_imp, enemy_harvest):
+def maximize_armies_on_important_cities(player, metropoles, cities, routes, imp, harvest, enemy_imp, enemy_harvest, enemy_player,  current_armies):
     #calculate score for every enemy city
     enemy_cities_scores = {}
     for enemy_city in cities.keys(): #I have to consider cities that are not in the enemy imperium nor in mine
         if not cities[enemy_city].is_metropolis() and enemy_city not in imp:
-            a = flow(player, metropoles, cities, routes, imp, None, None) # calculate flow from imp1 city to my metropolis
-            b = flow(player, metropoles, cities, routes, imp, enemy_city, None) # calculate flow from imp1 plus enemy city to my metropolis
+            a = flow(player, metropoles, cities, routes, imp.copy(), None, None) # calculate flow from imp1 city to my metropolis
+            b = flow(player, metropoles, cities, routes, imp.copy(), enemy_city, None) # calculate flow from imp1 plus enemy city to my metropolis
             c = b-a
-            e = flow(enemy_player, metropoles, cities, routes, enemy_imp, None, None) # calculate flow from imp2 city to enemy metropolis
-            f = flow(enemy_player, metropoles, cities, routes, enemy_imp, None, enemy_city) # calculate flow from imp2 minus enemy city to enemy metropolis
-            g = e-f
-            h = cities[enemy_city].get_production() # enemy_city species production
+            d = flow(enemy_player, metropoles, cities, routes, enemy_imp.copy(), None, None) # calculate flow from imp2 city to enemy metropolis
+            e = flow(enemy_player, metropoles, cities, routes, enemy_imp.copy(), None, enemy_city) # calculate flow from imp2 minus enemy city to enemy metropolis
+            f = d-e
+            g = cities[enemy_city].get_production() # enemy_city species production
 
-            i = c + g + d # how valuable is enemy_city
+            i = c + f + g # how valuable is enemy_city
             enemy_cities_scores[enemy_city] = i
 
     # add sum of neighbour enemy city scores to every city
@@ -61,8 +61,7 @@ def maximize_armies_on_important_cities(player, cities, routes, imp, harvest, en
         cities_scores[city] = j
 
     temporary_imperium = []
-
-    sorted_cities = cities_scores.keys()
+    sorted_cities = list(cities_scores.keys())
     sorted_cities.sort(key=lambda x: cities_scores[x], reverse=True)
     x = sum(cities_scores.values())
 
@@ -73,16 +72,16 @@ def maximize_armies_on_important_cities(player, cities, routes, imp, harvest, en
             x -= cities_scores[city]
             current_armies -= j
         temporary_imperium.append([city, j+1]) # add the army that i previously removed
-    return
+    return temporary_imperium
 
 def produce(player, metropoles, cities, routes, imp1, h1, imp2, h2):
 
     # rename players
-    enemy_player = 1 if player == 2 else 2
-    imp = imp1 if player == 1 else imp2
-    enemy_imp = imp2 if player == 1 else imp1
-    harvest = h1 if player == 1 else h2
-    enemy_harvest = h2 if player == 1 else h1
+    enemy_player = 1 if (player == 2) else 2
+    imp = imp1 if (player == 1) else imp2
+    enemy_imp = imp2 if (player == 1) else imp1
+    harvest = h1 if (player == 1) else h2
+    enemy_harvest = h2 if (player == 1) else h1
 
     # get previous ammount of armies
     current_armies = 0
@@ -113,6 +112,6 @@ def produce(player, metropoles, cities, routes, imp1, h1, imp2, h2):
         current_armies += harvest * 2
         temporary_harvest-= harvest
 
-        temporary_imperium = maximize_armies_on_important_cities(player, cities, routes, imp, harvest, enemy_imp, enemy_harvest):
+        temporary_imperium = maximize_armies_on_important_cities(player, metropoles, cities, routes, imp, harvest, enemy_imp, enemy_harvest, enemy_player,  current_armies)
 
     return temporary_harvest, temporary_imperium

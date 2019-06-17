@@ -7,6 +7,14 @@ class Graph():
         self.adjacency_list = {}
         self.nodes_data = {}
 
+    #removethis
+    def get_adjacency_list(self):
+        return self.adjacency_list
+    def get_nodes_data(self):
+        return self.nodes_data
+    #removethis
+
+
     def add_node(self, key, data = None):
         self.adjacency_list[key] = {}
         self.nodes_data[key] = data if data else None
