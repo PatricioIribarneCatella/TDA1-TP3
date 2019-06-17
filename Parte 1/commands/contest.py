@@ -1,3 +1,6 @@
+from city import City
+from metropolis import Metropolis
+
 def join_armies(attack):
     attack = {}
     for origin, destinations in attack.items():

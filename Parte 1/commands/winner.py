@@ -1,3 +1,7 @@
+from city import City
+from metropolis import Metropolis
+from general_commands import get_metropolis
+
 def fifty_rounds_winner(round, harvest1, harvest2, imperium1, imperium2, routes):
     winner = None
     if round < 50:

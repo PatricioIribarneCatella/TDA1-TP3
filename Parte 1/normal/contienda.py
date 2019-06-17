@@ -7,6 +7,9 @@ from os import path
 sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 
 from commands.contest import contest
+from commands.general_commands import create_cities_dict
+from commands.general_commands import create_imperium_dict
+from commands.general_commands import create_attack_dict
 
 IMPERIUM_FILE = "imperio{}.txt"
 

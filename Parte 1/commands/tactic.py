@@ -1,5 +1,7 @@
 import math
 from graph import Graph
+from city import City
+from metropolis import Metropolis
 
 def find(cities, c):
     for e in cities:
@@ -13,7 +15,7 @@ def flow(player, cities, routes, imp, added_city, removed_city):
         if imp.has_key(removed_city):
             imp.pop(removed_city)
 
-    metropoli = cities[player - 1][0]
+    metropolis = cities[player - 1][0]
 
     g = Graph(True)
 
@@ -24,8 +26,8 @@ def flow(player, cities, routes, imp, added_city, removed_city):
         g.add_node(e[0] + 1, e[1])
         mapping[e[0] + 1] = e[1]
 
-    g.add_node(e[0] + 2, metropoli)
-    metropoli_num = e[0] + 2
+    g.add_node(e[0] + 2, metropolis)
+    metropolis_num = e[0] + 2
 
     # Add edges between "source" and
     # cities. Flow capacity in the edge is the
@@ -35,8 +37,8 @@ def flow(player, cities, routes, imp, added_city, removed_city):
 
     # Add edges between cities and "metropoli"
     for w in range(1, len(imp.keys()) + 1):
-        if (mapping[w], metropoli) in routes:
-            g.add_edge(w, metropoli_num, routes[(mapping[w], metropoli)])
+        if (mapping[w], metropolis) in routes:
+            g.add_edge(w, metropolis_num, routes[(mapping[w], metropolis)])
 
     # Add edges between cities
     for n, city1 in enumerate(imp.keys()):
@@ -45,7 +47,7 @@ def flow(player, cities, routes, imp, added_city, removed_city):
                 g.add_edge(n + 1, k + 1, routes[city1, city2])
 
     # Get max flow
-    flow = g.ford_fulkerson(0, metropoli_num)
+    flow = g.ford_fulkerson(0, metropolis_num)
 
     return flow
 

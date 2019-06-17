@@ -10,6 +10,7 @@ from commands.general_command import create_metropolis_dict
 from commands.general_command import create_cities_dict
 from commands.general_command import create_routes_dict
 from commands.general_command import create_imperium_dict
+from commands.general_command import get_harvest
 
 WINNER_FILE = "ganador.txt"
 

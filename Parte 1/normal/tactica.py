@@ -7,6 +7,10 @@ from os import path
 sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 
 from commands.tactic import tactic
+from commands.general_commands import create_cities_dict
+from commands.general_commands import create_routes_dict
+from commands.general_commands import create_imperium_dict
+from commands.general_commands import get_harvest
 
 ATTACK_FILE = "ataque{}.txt"
 
