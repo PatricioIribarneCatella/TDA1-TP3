@@ -1,6 +1,6 @@
-# TDA1-TP3
+# TP-Spice
 
-_La especia debe fluir_
+_La especia debe fluir_ (algoritmo de Ford-Fulkerson para flujo máximo en redes) (_Teoría de Algoritmos I - FIUBA_)
 
 ### Run
 
